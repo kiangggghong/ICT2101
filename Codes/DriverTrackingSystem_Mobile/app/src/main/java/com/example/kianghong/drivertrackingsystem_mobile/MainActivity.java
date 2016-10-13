@@ -11,7 +11,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Intent browerIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://scoreboardsit.azurewebsites.net"));
+        Intent browerIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.google.com"));
         startActivity(browerIntent);
         finish();
     }
