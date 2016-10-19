@@ -4,7 +4,7 @@ Create Table Users
 u_id INT NOT NULL PRIMARY KEY IDENTITY(1,1),
 userName VARCHAR(255) NOT NULL,
 password VARCHAR(255) NOT NULL,
-role VARCHAR(100) NOT NULL,
+r_id INT NOT NULL,
 firstName VARCHAR(255),
 lastName VARCHAR(255),
 nric VARCHAR(20),
@@ -32,7 +32,7 @@ order_Number VARCHAR(255) NOT NULL,
 delivery_Date DATETIME NOT NULL,
 location VARCHAR(255) NOT NULL,
 unitNumber VARCHAR(100),
-postalCode VARCHAR(10)
+postalCode VARCHAR(6)
 )
 
 -- Create table script for road maps
@@ -45,3 +45,13 @@ p_id INT NOT NULL FOREIGN KEY REFERENCES Packages(p_id),
 eta INT,
 v_id INT NOT NULL FOREIGN KEY REFERENCES Vehicles(v_id)
 )
+
+-- Create table script for Roles
+Create Table Roles
+(
+r_id INT NOT NULL PRIMARY KEY IDENTITY(1,1),
+name VARCHAR(255) NOT NULL
+)
+
+INSERT INTO Roles(name)
+VALUES ('Dispatch Manager'), ('Driver')
