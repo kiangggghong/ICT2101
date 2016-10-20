@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Driver Management Application</title>
+
+	<!-- (Need to have this to make the page as what it is) -->
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="css/business-casual.css" rel="stylesheet">
+
+</head>
+
+
+<body>
+	<H5>Login ID:</H5>
+    <div class="container">
+
+        <div class="row">
+            <div class="box">
+                <div class="col-lg-12 text-center">
+                    <h1 class="brand-name">Driver Tracking System </h1>					
+                </div>		
+				<div class="input-group text-center" role="search">
+				  <input type="text" class="form-control" placeholder="Search for Package/Driver">
+				  <span class="input-group-btn">
+					<button class="btn btn-default" type="button">Go!</button>
+				  </span>
+				</div><br><br><!-- /input-group -->		
+    <!-- Tryout -->
+	<!-- Trigger the modal with a button -->
+	<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Add Package</button>
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-lg">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+                <div class="form-group">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h1 class="modal-title text-center">Add Package</h1>
+        </div>
+
+					<fieldset disabled>
+					<label class="col-sm-2 control-label">Package ID</label>
+					<div class="col-sm-6">
+                        <input type="PName" id="PName" placeholder="P1  <-- System Generated Should be in running order" class="form-control">
+                    </div><br><br>
+					</fieldset disabled>
+					
+                    <label class="col-sm-2 control-label">Package Name</label>
+                    <div class="col-sm-6">
+                        <input type="PName" id="PName" placeholder="Package Name" class="form-control">
+                    </div><br><br>
+					<label class="col-sm-2 control-label">Package Address</label>
+                    <div class="col-sm-6">
+                        <input type="Address" id="Address" placeholder="Package Address" class="form-control">
+                    </div><br><br>
+                    <label class="col-sm-2 control-label">Customer Name</label>
+                    <div class="col-sm-6">
+                        <input type="CName" id="CName" placeholder="Customer Name" class="form-control">
+                    </div><br><br>
+                    
+					<label class="col-sm-2 control-label">Customer Phone</label>
+                    <div class="col-sm-6">
+                        <input type="Phone" id="Phone" placeholder="Customer Phone" class="form-control">
+                    </div><br><br>
+					
+					<!-- End of dropdown -->
+					<label class="col-sm-2 control-label">Assign to Which Driver<t><t></label>
+					<div class="btn-group">
+					  <button type="button" class="btn btn-default ">Driver1</button>
+					  <button type="button" class="btn btn-default  dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<span class="caret"></span>
+						<span class="sr-only">Toggle Dropdown</span>
+					  </button>
+					  <ul class="dropdown-menu">
+						<li><a href="#">Driver 1</a></li>
+						<li><a href="#">Driver 2</a></li>
+					  </ul>
+					</div>
+					<br><br>
+					<!-- End of dropdown -->
+					
+					<button type="submit" class="btn btn-primary">Submit</button>					
+
+					
+					
+				</div>
+	
+    </div>
+
+  </div>
+</div>
+	
+    <!-- Tryout -->				
+            </div>
+		
+        </div>
+
+        <div class="row">
+			 <table class="table table-striped">
+				<tr>
+					<th>#</th>
+					<th>DRIVER NAME</th>
+					<th>VEHICLE NUMBER</th>
+					<th>sTATUS</th>
+					<th>DESTINATION</th>
+					<th>NO.OF PACKAGE LEFT</th>
+					<th>MORE DETAIL</th>
+				</tr>
+				<tr>
+					<th>1</th>
+					<th>jOHN</th>
+					<th>GT 581 K</th>
+					<th>DELIVERING</th>
+					<th>SIT</th>
+					<th>3</th>
+					<th>
+					<a href='Manager.html' role='button' class='btn btn-success'>CLICK HERE FOR MORE DETAIL</a>
+					</th>
+				</tr>
+				<tr>
+					<th>1</th>
+					<th>jOHN</th>
+					<th>GT 581 K</th>
+					<th>DELIVERING</th>
+					<th>SIT</th>
+					<th>3</th>
+					<th>
+					<a href='Manager.html' role='button' class='btn btn-success'>CLICK HERE FOR MORE DETAIL</a>
+					</th>
+				</tr>				
+			</table> 			
+        </div>
+    </div>
+    <!-- /.container -->
+
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <p>Copyright &copy; Driver Management 2016</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- jQuery -->
+    <script src="js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+
+</body>
+
+</html>
