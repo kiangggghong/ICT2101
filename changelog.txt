@@ -1,3 +1,16 @@
 Changelog
 
-1. test
+22.10.2016 12.56 pm
+Prototype updates
+
+Completed:
+1) Log in page
+2) Navbar with home and logout button (manager side)
+3) Navbar with home button (driver side) - replace popover idea
+4) Add details to driver packages table
+5) Map resized using px
+6) Package address fields split into location, unit number and postal code fields. Now these 3 fields are cosistent throughout
+7) Implement package priority through javsscript
+
+yet to be completed:
+1) Sticky footer
