@@ -27,43 +27,64 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+
 </head>
 
 <body>
-    <!-- <div class="brand">Driver View</div>-->
-    <!--need to put navigation bar??-->
-    <!--<nav class="navbar navbar-inverse navbar-fixed-top">
+    <!--
+    <div class="brand">Driver View</div>
+    -->
+
+    <!--navbar-->
+    <nav class="navbar navbar-inverse">
         <div class="container-fluid">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="Driver_mainPage.html">Team 41</a>
-            </div>
             <ul class="nav navbar-nav">
-                <li class="active"><a href="Driver_mainPage.html">Home</a></li>
-                <li><a href="Driver_packagesPage.html">Packages</a></li>
+                <li><a href="Driver_mainPage.html"><span class="glyphicon glyphicon-home"></span>Home</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><span class="glyphicon glyphicon-user"></span>Driver's name</li>
+                <li><a href="#"><span class="glyphicon glyphicon-user"></span>John</a></li>
             </ul>
         </div>
-    </nav>-->
+    </nav>
 
-    <H5>Login ID:</H5>
+    <!--main body-->
     <div class="container">
-        <!--Added button to direct driver to package detail page-->
-        <div class="row">
-            <a href="Driver_packagesPage.html" class="btn btn-primary btn-lg btn-block" role="button">Packages left: <span class="badge">X</span></a>
+
+        <!--Title of page-->
+        <div class="jumbotron">
+            <h1 class="text-center">Package details</h1>
+            <h3 class="text-center">2 packages left</h3>
         </div>
 
-        <div class="row">
-            <article style="width:auto;overflow:hidden;max-height:500%;max-width:100%;">
-                <section class="embed-map-display">
-                    <iframe style="height:500%;width:100%;border:0;" frameborder="0" src="https://www.google.com/maps/embed/v1/place?q=shaw+theatre+lido&key=AIzaSyAN0om9mFmy1QN6Wf54tXAowK4eT0ZUPrU"></iframe>
-                </section>
-            </article>
+        <!-- Panel for current delivery -->
+        <h4 class="text-center">Current delivery</h4>
+        <div class="panel panel-danger">
+            <div class="panel-heading"><h4>Order Number: 123</h4></div>
+            <div class="panel-body">
+                <p>Location: SIT</p>
+                <p>Unit Number: #01-01</p>
+                <p>Postal code: 192311</p>
+                <p>Customer: Holly</p>
+                <p>Customer No: 93586214</p>
+            </div>
+        </div>
+
+        <!--Panels for pending deliveries-->
+        <h4 class="text-center">Pending deliveries  </h4>
+        <div class="panel panel-info">
+            <div class="panel-heading"><h4>Order Number: 456</h4></div>
+            <div class="panel-body">
+                <p>Location: Tampines St 11</p>
+                <p>Unit Number: #03-01</p>
+                <p>Postal code: 654712</p>
+                <p>Customer: Jane</p>
+                <p>Customer No: 84579521</p>
+            </div>
         </div>
     </div>
     <!-- /.container -->
 
+    <!--footer-->
     <footer>
         <div class="container">
             <div class="row">
@@ -82,4 +103,4 @@
 
 </body>
 
-</html>-->
+</html>

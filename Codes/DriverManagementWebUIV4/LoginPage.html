@@ -31,48 +31,45 @@
 </head>
 
 <body>
-    <!--
-    <div class="brand">Driver View</div>
-    -->
-    <H5>Login ID:</H5>
+    <!--main body-->
     <div class="container">
-        <!--Title of page-->
+
+        <!--title-->
         <div class="jumbotron">
-            <h1 class="text-center">Package details</h1>
-            <h3 class="text-center">X packages left</h3>
+            <h1 class="text-center">Driver Tracking System</h1>
+            <h2 class= "text-center">Login</h2>
         </div>
 
-        <!-- Panel for current delivery -->
-        <h4 class="text-center">Current delivery</h4>
-        <div class="panel panel-danger">
-            <div class="panel-heading">Package code: </div>
-            <div class="panel-body">
-                <p>Address: </p>
-                <p>POC: </p>
-            </div>
-        </div>
+        <div class="row">
+            <div class="Absolute-Center is-Responsive">
+                <div class="col-sm-12 col-md-10 col-md-offset-1">
+                    <form action="" id="loginForm">
 
-        <!--Panels for pending deliveries-->
-        <h4 class="text-center">Pending deliveries  </h4>
-        <div class="panel panel-info">
-            <div class="panel-heading">Package code: </div>
-            <div class="panel-body">
-                <p>Address: </p>
-                <p>POC: </p>
-            </div>
-        </div>
-        <div class="panel panel-info">
-            <div class="panel-heading">Package code: </div>
-            <div class="panel-body">
-                <p>Address: </p>
-                <p>POC: </p>
-            </div>
-        </div>
-        <!-- Add packages detail -->
+                        <!-- username -->
+                        <div class="form-group input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                            <input class="form-control" type="text" id='username' name='username' placeholder="username" />
+                        </div>
 
+                        <!--password-->
+                        <div class="form-group input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                            <input class="form-control" type="password" name='password' placeholder="password" />
+                        </div>
+
+                        <!--login button-->
+                        <div class="form-group">
+                            <button type="button" id="md" class="btn btn-def btn-info btn-block" onclick="redirect()">Login</button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
-    <!-- /.container -->
 
+
+    <!--footer-->
     <footer>
         <div class="container">
             <div class="row">
