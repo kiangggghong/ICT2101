@@ -4,6 +4,11 @@
  * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap/blob/gh-pages/LICENSE)
  */
 
+/*ensure table headrs are centralized*/
+tr > th {
+    text-align: center;
+}
+
 /*determine position of login forms*/
 .Absolute-Center {
     margin: auto;

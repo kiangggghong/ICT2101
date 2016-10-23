@@ -18,16 +18,18 @@ $(function () {
     // when a dropdown option is selected
     $(".dropdown-menu li a").click(function () {
 
-        // reflect chosen option
+        // obtain value of chosen option
         var x = $(this).text();
-        $(".selectedOption").text(x);
-    });
 
+        // go up DOM tree to change dropdown display with selected option
+        $(this).parent().parent().parent().children("button.selectedOption").text(x);
+    });
 });
 
 // function executed when user click log in button
 function redirect() {
 
+    // based on value inputted in username
     // redirect to manager page
     if (document.getElementById('username').value == "Manager") {
         window.location = "Manager_mainPage.html";
@@ -39,21 +41,31 @@ function redirect() {
     }
 }
 
-// function exectued when user confirms prioritization of package
+// function executed when user confirms prioritization of package
 function hidePrioritizeButton() {
 
     // when confirmed prioritization button is clicked
     $("#prioritizeButtonClicked").click(function () {
+        
+        // when user clicks "yes" on confirmation alert
+        if (confirmationAlert() == true) {
+            // close the popover
+            $("#prioritizePackageModal").modal('toggle');
 
-        // close the popover
-        $("#myModal").modal('toggle');
+            // hide the priorize package button
+            $('#hidePrioritizeButton').hide();
 
-        // hide the priorize package button
-        $('#hidePrioritizeButton').hide();
+            // insert PRIORITIZED into HTML
+            document.getElementById("xx").innerHTML = "<h4><font color = 'red'>PRIORITIZED</font></h4>";
+        }
 
-        // insert PRIORITIZED into HTML
-        document.getElementById("xx").innerHTML = "<h4><font color = 'red'>PRIORITIZED</font></h4>";
     });
 }
 
-
+// function that executes an alert prompt when user prioritizes a package
+function confirmationAlert() {
+   
+    if (confirm("Package will be priortized. Are you sure?") == true) {
+        return true;
+    }
+}

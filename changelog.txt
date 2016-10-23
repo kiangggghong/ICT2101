@@ -1,5 +1,22 @@
 Changelog
 
+23.10.2016 10.06 am
+Prototype updates
+Completed:
+1) Add package and assign package button on navbar
+2) Create assign package popover
+3) Bigger maps for prioritze package popover
+4) maps now show road maps
+5) center aligned table headers
+6) center aligned add package form
+7) Aligned dropdown list and forms
+8) Prioriize package improved
+
+Yet to be compeleted:
+1) Sticky footer
+2)Sticky navbar
+3) navbar too thick on driver side
+
 22.10.2016 12.56 pm
 Prototype updates
 

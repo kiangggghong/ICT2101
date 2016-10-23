@@ -31,7 +31,6 @@
 
 <body>
     <!-- <div class="brand">Driver View</div>-->
-
     <!--navbar-->
     <nav class="navbar navbar-inverse">
         <div class="container-fluid">
@@ -52,16 +51,14 @@
             <a href="Driver_packagesPage.html" class="btn btn-primary btn-lg btn-block" role="button">Packages left: <span class="badge">2</span></a>
         </div>
 
-        <!--google map--> 
+        <!--google map-->
         <div class="row">
-            <article style="width:auto;overflow:hidden;max-height:500%;max-width:100%;">
-                <section class="embed-map-display">
-                    <iframe style="height:440px;width:100%;border:0;" frameborder="0" src="https://www.google.com/maps/embed/v1/place?q=shaw+theatre+lido&key=AIzaSyAN0om9mFmy1QN6Wf54tXAowK4eT0ZUPrU"></iframe>
-                </section>
-            </article>
+            <div style="height:440px;width:500%;max-width:100%;list-style:none; transition: none;overflow:hidden;">
+                <div id="gmap_display" style="height:440px; width:100%;max-width:100%;"><iframe style="height:100%;width:100%;border:0;" frameborder="0" src="https://www.google.com/maps/embed/v1/directions?origin=Raffles+Place+Singapore&destination=Singapore+Institute+of+Technology+Singapore&key=AIzaSyAN0om9mFmy1QN6Wf54tXAowK4eT0ZUPrU"></iframe></div>
+            </div>
         </div>
+
     </div>
-    <!-- /.container -->
 
     <!--footer-->
     <footer>
