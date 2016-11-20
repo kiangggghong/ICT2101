@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Geolocation</title>
+    <meta name="viewport" content="initial-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <meta charset="utf-8">
+    <style>
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      #map {
+        height: 50%;
+      }
+    </style>
+  </head>
+  <body>
+
+    <div id="map"></div>
+    <!--The map will be put 'inside' this div -->
+
+    <script>
+      
+var currLat;
+var currLng;
+
+var arrOfTotalDuration = [];
+var arrOfPolylines = [];
+
+      function initMap() {
+          
+          
+        var map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: -34.397, lng: 150.644},
+          zoom: 6
+        });
+   /*
+   *line 37 to line 39 initialise a map and display it on the page.
+   * The map is a content of the <div> with id 'map'(line 25)
+     */
+        //var infoWindow = new google.maps.InfoWindow({map: map});
+
+        
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(function(position) {
+            var pos = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+            };
+    /*Line 48 to 52: Try HTML5 geolocation.
+     * Actual fetching of current coordinates of device. 
+     * 
+      */      
+        
+        //infoWindow.setPosition(pos);
+        currLat = pos.lat;
+        currLng = pos.lng;
+        
+        /*Line 60 to 61
+         * Store the device current latitude and longtitude 
+         * inside two variables
+         */
+        
+        
+        var currLatLng = new google.maps.LatLng(currLat, currLng);
+        //create a google maps latlng object using the current location
+        
+        var latlng2 = {lat:  1.3644256, lng: 103.9893421 };
+        //location of airport hardcoded
+        
+        var latlng3 = {lat: 1.3342536, lng: 103.7781667 };
+        // location of ngee ann poly hardcoded
+        var latlng4 = {lat: 1.4430951,lng: 103.783392};
+        // location of rp hardcoded. 
+        
+        var arrOfLatLng = [currLatLng,latlng2,latlng3,latlng4];
+        
+        //line 80: store the latlngs objects from line 69 to line 77 in an array
+        
+        for(k = 1; k < arrOfLatLng.length; k++ ){
+            var marker2 = new google.maps.Marker({
+            position: arrOfLatLng[k],
+            map: map,
+            icon: 'images/blueMarker.png'
+});
+
+ marker2.setMap(map);
+
+/*
+ * line 84 to 91. 
+ * Loop through the array of latlng except the first item in the array.
+ * Exclude the first one because the first one is the current location
+ * Put blue markers on each location as they represent destinations. 
+ */ 
+
+        }
+ 
+        for(jj = 0; jj < arrOfLatLng.length-1; jj++){
+         // for every latlng in array of latlng
+       var directionsService = new google.maps.DirectionsService();
+        var directionsRequest = {
+            origin: arrOfLatLng[jj]  ,
+            destination: arrOfLatLng[jj+1] ,
+            /*
+             * Send a request to google API to find out how to go from origin to destination
+             * Origin is first element in array. destination is second element in array
+             * second iteration: origin is second element, destination is third element in array
+             * so on and so forth. 
+             */
+            travelMode: google.maps.DirectionsTravelMode.DRIVING,
+            unitSystem: google.maps.UnitSystem.METRIC
+        };
+        directionsService.route(directionsRequest, function (response, status) {
+            if (status == google.maps.DirectionsStatus.OK) {                    
+            
+               //response from google api on how to go from origin to destination
+            
+            var totalDurationNeed = 0;
+            
+            var timesToLoop = response.routes[0].legs[0].steps.length;
+            /*
+             * The response is a big javascript object. 
+             * each journey from start to end is one 'leg'
+             * inside one 'leg' there are many 'steps'. 
+             * each step is one small part of the entire journey
+             * duration needed to calculated for each step. 
+             */
+            
+            for(i = 0; i < timesToLoop; i++){
+                // for every step, sum up the time needed. meaning get amount of time for entire jounrey. 
+                var tempStringForDuration =  response.routes[0].legs[0].steps[i].duration.text;
+                // duration needed for each step is stored into a variable. at this point of time, duration is a string.
+                // the variable now contains a value like '10mins'
+                var pattern1 = /\d/g;
+                var numOfMinsInArr = tempStringForDuration.match(pattern1);
+                // use regex to extract out the integers from the string. 
+                
+                var addAllDigitsTogether = "";
+                var numOfMinsToInt;
+                
+                for(j = 0; j < numOfMinsInArr.length; j++){
+                    addAllDigitsTogether = addAllDigitsTogether + numOfMinsInArr[j];  
+                }
+               /*from the example above, the 10mins become an array [1,0], thus need to add digits together
+                * so that they become "10".
+                * at this point of time, "10" is still a string
+                */
+          
+                numOfMinsToInt = parseInt(addAllDigitsTogether);
+                //convert "10" to 10 in integer form. 
+                totalDurationNeed = totalDurationNeed + numOfMinsToInt;
+                    // add up all the time needed for each step. 
+     
+                
+            }
+
+            
+          document.getElementById("displayTimeNeeded").innerHTML += totalDurationNeed ;
+          document.getElementById("displayTimeNeeded").innerHTML += "mins" ;
+            
+    
+            
+            var flightPath = new google.maps.Polyline({
+          path: google.maps.geometry.encoding.decodePath(response.routes[0].overview_polyline),
+          //geodesic: true,
+          strokeColor: '#FF0000',
+          strokeOpacity: 1.0,
+          strokeWeight: 2
+        });
+
+        flightPath.setMap(map);
+          //line 167 to line 175 draw the lines on the map. Line shows how to go from origin to destination. 
+            
+            
+            }
+            else{
+                
+            }
+                //Error has occured
+        });
+        
+        //end here
+    }
+    // for loop ends here
+    /*
+     * Line 102 to line 187. a big for loop. 
+     * for every start and end point send a api request on how to travel
+     * get the response and interpret time needed and draw lines on the map. 
+     */
+  
+
+          
+            var currMarker = new google.maps.Marker({
+           position: pos,
+           map: map   
+          });
+
+            currMarker.setMap(map);
+            // create a red marker and put it on current location of device. 
+
+            map.setCenter(pos);
+          }, function() {
+            handleLocationError(true, infoWindow, map.getCenter());
+          });
+        } else {
+          // Browser doesn't support Geolocation
+          handleLocationError(false, infoWindow, map.getCenter());
+        }
+       
+    }
+    
+    
+ 
+    
+        
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDBlPRqussTfegXfkko_dknboV8cips-hE&callback=initMap&libraries=geometry">
+    </script>
+    
+    
+    <script>
+      
+    </script>
+    <h2 id="displayTimeNeeded">Total time needed: </h2>
+    
+  </body>
+</html>
