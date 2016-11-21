@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>View Map</title>
+    <meta name="viewport" content="initial-scale=1, user-scalable=no">
+    <meta charset="utf-8">
+    <style>
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      #map {
+        height: 50%;
+      }
+    </style>
+  </head>
+  <body>
+
+    <div id="map"></div>
+    <!--The map will be put 'inside' this div -->
+
+    <script>
+      
+
+
+
+      function initMap() {
+          
+       var destination = "Singapore 599489";
+          //NP
+        var map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: -34.397, lng: 150.644},
+          zoom: 6
+        });
+        
+   
+        
+        postalCodeToLatLng(destination,map);
+        currLocationHelper(function(a,b){
+        var currLocationArr = generateCurrentLocation(a,b,map);
+        estimateTimeToDelivery(currLocationArr,destination,map);
+  });
+}
+    
+    
+    function currLocationHelper(callback){
+        
+       
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(function(position) {
+            var pos = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+            };
+    
+    
+        callback(pos.lat,pos.lng);
+    
+          }, function() {
+            handleLocationError(true, infoWindow, map.getCenter());
+          });
+        } else {
+          // Browser doesn't support Geolocation
+          handleLocationError(false, infoWindow, map.getCenter());
+        }
+
+      
+    }
+    
+    
+    function estimateTimeToDelivery(pcurrLocArr,pdestination,map){
+
+        
+
+
+        var pcurrLatLng = new google.maps.LatLng(pcurrLocArr[0], pcurrLocArr[1]);
+        
+         var directionsService = new google.maps.DirectionsService();
+        var directionsRequest = {
+            origin: pcurrLatLng,
+            destination: pdestination ,
+            /*
+             * Send a request to google API to find out how to go from origin to destination
+             */
+            travelMode: google.maps.DirectionsTravelMode.DRIVING,
+            unitSystem: google.maps.UnitSystem.METRIC
+        };
+        
+        
+        directionsService.route(directionsRequest, function (response, status) {
+            if (status == google.maps.DirectionsStatus.OK) {                    
+            
+               //response from google api on how to go from origin to destination
+            
+            var totalDurationNeed = 0;
+            
+            var timesToLoop = response.routes[0].legs[0].steps.length;
+            /*
+             * The response is a big javascript object. 
+             * each journey from start to end is one 'leg'
+             * inside one 'leg' there are many 'steps'. 
+             * each step is one small part of the entire journey
+             * duration needed is calculated and generated for each step. 
+             */
+            
+            for(i = 0; i < timesToLoop; i++){
+                // for every step, sum up the time needed. meaning get amount of time for entire jounrey(leg). 
+                var tempStringForDuration =  response.routes[0].legs[0].steps[i].duration.text;
+                // duration needed for each step is stored into a variable. at this point of time, duration is a string.
+                // the variable now contains a value like '10mins'
+                var pattern1 = /\d/g;
+                var numOfMinsInArr = tempStringForDuration.match(pattern1);
+                // use regex to extract out the integers from the string. 
+                
+                var addAllDigitsTogether = "";
+                var numOfMinsToInt;
+                
+                for(j = 0; j < numOfMinsInArr.length; j++){
+                    addAllDigitsTogether = addAllDigitsTogether + numOfMinsInArr[j];  
+                }
+               /*from the example above, the 10mins become an array [1,0], thus need to add digits together
+                * so that they become "10".
+                * at this point of time, "10" is still a string
+                */
+          
+                numOfMinsToInt = parseInt(addAllDigitsTogether);
+                //convert "10" to 10 in integer form. 
+                totalDurationNeed = totalDurationNeed + numOfMinsToInt;
+                    // add up all the time needed for each step. 
+
+            }
+            document.getElementById("displayTimeNeeded").innerHTML += totalDurationNeed ;
+          document.getElementById("displayTimeNeeded").innerHTML += "mins" ;
+          
+          
+          drawRoute(response,map);
+
+            }
+            else{
+                
+            }
+                //Error has occured
+                
+               
+        });
+        
+        
+    }
+    
+    function generateCurrentLocation(a,b,pMap){
+        var arrOfLatLng = [];
+        arrOfLatLng[0] = a;
+        arrOfLatLng[1] = b;
+        
+        var tempLatLng = new google.maps.LatLng(a,b);
+              
+            var currMarker = new google.maps.Marker({
+           position: tempLatLng,
+           map: pMap   
+          });
+
+            currMarker.setMap(pMap);
+             pMap.setCenter(tempLatLng);
+             pMap.setZoom(10);
+        
+        return arrOfLatLng;
+    }
+    
+    function postalCodeToLatLng(destination,pMap){
+                 var geocoder = new google.maps.Geocoder();
+         geocoder.geocode( { 'address': destination}, function(results, status) {
+      if (status == google.maps.GeocoderStatus.OK) {
+        var lat = results[0].geometry.location.lat();
+        var lng = results[0].geometry.location.lng();
+        
+        // line 80: takes the destination variable from line 74 and gecode it
+        
+        var destInLatLng = new google.maps.LatLng(lat, lng);
+      // that is the postal code is transformed into a latlng object. line 87  
+      
+      
+      
+       var marker2 = new google.maps.Marker({
+            position: destInLatLng,
+            map: pMap,
+            icon: 'images/blueMarker.png'
+});
+
+ marker2.setMap(pMap);
+  // line 93: converting postal code to latlng is important because to put a marker on the map, it requires a latlng. 
+        
+        
+        
+      } else {
+        alert("Geocode was not successful for the following reason: " + status);
+      }
+    });
+    }
+    
+    
+    function drawRoute(apiResponse,pMap){
+          var flightPath = new google.maps.Polyline({
+          path: google.maps.geometry.encoding.decodePath(apiResponse.routes[0].overview_polyline),
+          //geodesic: true,
+          strokeColor: '#FF0000',
+          strokeOpacity: 1.0,
+          strokeWeight: 2
+        });
+
+        flightPath.setMap(pMap);
+    }
+    
+    
+ 
+    
+        
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDBlPRqussTfegXfkko_dknboV8cips-hE&callback=initMap&libraries=geometry">
+    </script>
+    
+    
+    <script>
+      
+    </script>
+    <h2 id="displayTimeNeeded">Total time needed: </h2>
+    
+  </body>
+</html>
