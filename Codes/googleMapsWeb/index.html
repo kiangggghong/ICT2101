@@ -39,8 +39,8 @@
    
         
         postalCodeToLatLng(destination,map);
-        currLocationHelper(function(a,b){
-        var currLocationArr = generateCurrentLocation(a,b,map);
+        currLocationHelper(function(lat,lng){
+        var currLocationArr = generateCurrentLocation(lat,lng,map);
         estimateTimeToDelivery(currLocationArr,map,destination);
   });
 }
