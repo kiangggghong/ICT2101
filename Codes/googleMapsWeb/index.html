@@ -27,22 +27,54 @@
 
       function initMap() {
           
-       var destination = "Singapore 599489";
+       var destination = "599489";
           //destination of driver, hardcoded, Ngee Ann Poly or nothing
           //  Singapore 599489
         var map = new google.maps.Map(document.getElementById('map'), {
           center: {lat: 1.3150701, lng: 103.7069311},
           zoom: 10
         });
+  
+        
         //create a google map object and display on the page. 
         
-   
-        
-        postalCodeToLatLng(destination,map);
+             
+  var patternForSixDigits = /\d{6}/;
+  
+  var checkPostalCode = patternForSixDigits.test(destination);
+  
+  var patternForAnyString = /.+/;
+  
+  var checkForDestinationNotEmpty = patternForAnyString.test(destination);
+  
+
+        if( checkForDestinationNotEmpty && checkPostalCode){
+            postalCodeToLatLng(destination,map);
         currLocationHelper(function(lat,lng){
         var currLocationArr = generateCurrentLocation(lat,lng,map);
         estimateTimeToDelivery(currLocationArr,map,destination);
+       
+        
   });
+       }else if(!checkForDestinationNotEmpty){
+          
+           currLocationHelper(function(lat,lng){
+        var currLocationArr = generateCurrentLocation(lat,lng,map);
+       alert("There is currently no packages to deliver");
+       
+        
+  });
+       }else if(!checkPostalCode){
+          
+           currLocationHelper(function(lat,lng){
+        var currLocationArr = generateCurrentLocation(lat,lng,map);
+       alert("Postal code for destination is invalid");
+       
+        
+  });
+       }
+   
+        
 }
     
     
@@ -84,9 +116,7 @@
  * to travel from one place to another
  * put draw the route the driver should take to travel. 
  */
-        if(pdestination == ""){
-            alert("There is currently no packages for delivery");
-        }else{
+   
 
 
         var pcurrLatLng = new google.maps.LatLng(pcurrLocArr[0], pcurrLocArr[1]);
@@ -163,7 +193,7 @@
                
         });
         
-    }
+    
     }
     
     function generateCurrentLocation(a,b,pMap){
@@ -194,12 +224,8 @@
     
     function postalCodeToLatLng(destination,pMap){
         
-        
-       
-        if(destination != ""){
-       
-        
-                 var geocoder = new google.maps.Geocoder();
+
+         var geocoder = new google.maps.Geocoder();
          geocoder.geocode( { 'address': destination}, function(results, status) {
       if (status == google.maps.GeocoderStatus.OK) {
         var lat = results[0].geometry.location.lat();
@@ -226,15 +252,12 @@
   * place a custom marker on the map to differentiate that this marker
   * refers to destination. 
   */ 
-        
-        
-        
       } else {
         console.log("Geocode was not successful for the following reason: " + status);
       }
     });
     
-    }
+    
     
     }
     
