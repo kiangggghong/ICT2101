@@ -41,31 +41,78 @@ function redirect() {
     }
 }
 
-// function executed when user confirms prioritization of package
-function hidePrioritizeButton() {
-
-    // when confirmed prioritization button is clicked
-    $("#prioritizeButtonClicked").click(function () {
-        
-        // when user clicks "yes" on confirmation alert
-        if (confirmationAlert() == true) {
-            // close the popover
-            $("#prioritizePackageModal").modal('toggle');
-
-            // hide the priorize package button
-            $('#hidePrioritizeButton').hide();
-
-            // insert PRIORITIZED into HTML
-            document.getElementById("xx").innerHTML = "<h4><font color = 'red'>PRIORITIZED</font></h4>";
-        }
-
-    });
+// STUB FUNCTION
+// returns total time in mins
+function getTotalTimeOfOverallRoadmap(type) {
+    
+    if (type == "current") {
+        return 140;
+    }
+    else if (type == "prioritized") {
+        return 150;
+    }
 }
 
-// function that executes an alert prompt when user prioritizes a package
-function confirmationAlert() {
-   
-    if (confirm("Package will be priortized. Are you sure?") == true) {
-        return true;
-    }
+// STUB FUNCTION
+// GENERATE ROADMAP
+function generateOverallRoadmap(type) {}
+
+// PRIORITIZE PACKAGE
+function prioritizePackage(packageID) {
+
+    // obtain node that represents the package that manager wants to prioritize
+    var prioritizedPackageNode = document.getElementById(packageID);
+
+    // obtain timings for overall roadmap for both current and new overall roadmaps
+    var currentTimeForOverallRodmap = getTotalTimeOfOverallRoadmap("current")
+    var newTimeForOverallRoadmap = getTotalTimeOfOverallRoadmap("prioritized");
+
+    // display those timings in HTML 
+    document.getElementById("currentTime".concat(packageID)).innerHTML = currentTimeForOverallRodmap;
+    document.getElementById("newTime".concat(packageID)).innerHTML = newTimeForOverallRoadmap;
+
+    // displayRoadmap in HTML. STUB FUNCTION
+    generateOverallRoadmap("current");
+    generateOverallRoadmap("prioritized");
+
+    // when confirmed prioritized button is clicked
+    $("#prioritizeButtonClicked".concat(packageID)).click(function () {
+
+        // if prioritizing that package, will result in an increased overall delivery time for the driver, set alert flag
+        var alertFlag = 0;
+        if (newTimeForOverallRoadmap > currentTimeForOverallRodmap) {
+            alertFlag = 1;
+        }
+
+        if (alertFlag == 1) {
+            // display alert prompt. If user confirms, carry on function. Else, user returns to popover
+            if (confirm("ALERT!!! Prioritizing this package will increase the overall delivery time of driver! Are you sure you would still like to proritize package" + packageID + "?") == true) { }
+            else { return;}
+        }
+
+        // display confirmation prompt. If user confirms, carry on function. Else, user returnts to popover
+        if (confirm("Package " + packageID + " will be priortized. Are you sure?") == true) {
+            // close the popover
+            $("#prioritizePackageModal".concat(packageID)).modal('toggle');
+            
+            // hide the priorize package button
+            prioritizedPackageNode.style.display = 'none';
+
+            // insert PRIORITIZED into HTML
+            prioritizedPackageNode.parentNode.innerHTML = "<h4><font color = 'red'>PRIORITIZED</font></h4>";
+
+            // move the prioritize package tuple to second position
+            var prioritizedTuple = document.getElementById("tuple".concat(packageID));
+            $("#prioritizedTuplePosition").replaceWith(prioritizedTuple);
+
+            // create the <tr id ="prioritizedTuplePosition"></tr> node
+            var node = document.createElement("tr");
+            node.setAttribute("id", "prioritizedTuplePosition");
+
+            // insert the above node to third row of table 
+            // i.e. package will always be prioritized to the second position
+            var table = document.getElementById("packageTable");
+            table.insertBefore(node, table.children[2]);
+        }
+    });
 }

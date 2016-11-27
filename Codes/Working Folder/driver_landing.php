@@ -56,7 +56,7 @@
             padding: 0;
         }
         #map {
-            height: 50%;
+            height: 70%;
         }
     </style>
     <!-- Fonts
@@ -92,10 +92,12 @@
         <div class="row">
             <a href="packageDetails.php" class="btn btn-primary btn-lg btn-block" role="button">Packages left: <span class="badge"><?php if($total == 0){ echo '0'; } else { echo $total; } ?></span></a>
         </div>
-        
+        <input type="hidden" id="address" name="address" value="<?php echo $postalCode; ?>">   
         <!--google map-->
-        <div id="map"></div>
-        <input type="hidden" id="address" name="address" value="<?php echo $postalCode; ?>">            
+        </div>
+    </div>
+    <div id="map"></div>
+                 
             <script>
             function initMap() {
                 var map = new google.maps.Map(document.getElementById('map'), {
@@ -123,7 +125,7 @@
                         currMarker.setMap(map);
                         // create a red marker and put it on current location of device. 
                         map.setCenter(pos);
-                        map.setZoom(13);
+                        map.setZoom(14);
                         var destination = document.getElementById('address').value;
                         //destination is NP postal code hardcoded. 
                         var patternForSixDigits = /\d{6}/;
@@ -219,19 +221,6 @@
                 }
             }//init map ends here
         </script>
-        </div>
-    </div>
-
-    <!--footer-->
-    <footer>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12 text-center">
-                    <p>Copyright &copy; Driver Management 2016</p>
-                </div>
-            </div>
-        </div>
-    </footer>
 
     <!-- jQuery -->
     <script src="js/jquery.js"></script>

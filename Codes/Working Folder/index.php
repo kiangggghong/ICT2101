@@ -59,7 +59,6 @@
             echo '</script>';
         }
     }
-    ob_end_flush();
 ?>
 
 <!DOCTYPE html>
